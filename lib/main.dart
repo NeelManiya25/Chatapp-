@@ -1,38 +1,35 @@
-import 'package:chat_app/firebase_options.dart';
-import 'package:chat_app/views/screens/chat_page.dart';
-import 'package:chat_app/views/screens/home_page.dart';
-import 'package:chat_app/views/screens/login_signup_page.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:chat_app/screens/phone_verification/sign_up_page.dart';
+import 'package:chat_app/screens/views/Home_page.dart';
+import 'package:chat_app/screens/views/login_screen.dart';
+import 'package:chat_app/screens/views/splash_screen.dart';
+import 'package:chat_app/utils/attributes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-Future<void> main() async {
+void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  await GetStorage.init();
-
+  await Firebase.initializeApp();
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(useMaterial3: true),
-      initialRoute: "/login_page",
+      theme: AppTheme.lighttheme,
+      darkTheme: AppTheme.Darktheme,
+      initialRoute: "/",
       getPages: [
         GetPage(
-          name: "/login_page",
-          page: () => const LoginSignUpPage(),
+          name: "/",
+          page: () => const login_Screen(),
         ),
         GetPage(
-          name: "/home_page",
+          name: "/HomePage",
           page: () => const HomePage(),
-        ),
-        GetPage(
-          name: "/chat_page",
-          page: () => const ChatPage(),
+        ),GetPage(
+          name: "/SingupPage",
+          page: () => const SingupPage(),
+        ),GetPage(
+          name: "/spalsh_screen",
+          page: () => const spalsh_screen(),
         ),
       ],
     ),
