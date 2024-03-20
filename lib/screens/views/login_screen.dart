@@ -20,11 +20,9 @@ class login_Screen extends StatefulWidget {
 class _login_ScreenState extends State<login_Screen> {
   final GlobalKey<FormState> signinKey = GlobalKey<FormState>();
   final GlobalKey<FormState> signupKey = GlobalKey<FormState>();
-
   final TextEditingController SignInEmailController = TextEditingController();
   final TextEditingController SignInPasswordController =
       TextEditingController();
-
   final TextEditingController SignUpEmailController = TextEditingController();
   final TextEditingController SignUpPasswordController =
       TextEditingController();
@@ -34,7 +32,6 @@ class _login_ScreenState extends State<login_Screen> {
 
   String? Email;
   String? Password;
-
   String? SignUpName;
   String? SignUpConfirmPassword;
 
@@ -44,7 +41,6 @@ class _login_ScreenState extends State<login_Screen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _passwordVisible = true;
   }
@@ -341,24 +337,6 @@ class _login_ScreenState extends State<login_Screen> {
                             ),
                           ),
                           SizedBox(height: Get.height * 0.03),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     const Text(
-                          //       "Don’t have an Account ? ",
-                          //       style: TextStyle(),
-                          //     ),
-                          //     GestureDetector(
-                          //       child: const Text(
-                          //         "Sign Up",
-                          //         style: TextStyle(
-                          //           fontWeight: FontWeight.bold,
-                          //         ),
-                          //       ),
-                          //       onTap: () {},
-                          //     )
-                          //   ],
-                          // ),
                           Text.rich(
                             TextSpan(
                               text: "Don’t have an Account ? ",
@@ -636,25 +614,6 @@ class _login_ScreenState extends State<login_Screen> {
                             ),
                           ),
                           SizedBox(height: Get.height * 0.03),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     Text(
-                          //       "Already have an Account ? ",
-                          //       style: TextStyle(),
-                          //     ),
-                          //     GestureDetector(
-                          //       onTap: () {
-                          //       },
-                          //       child: Text(
-                          //         "Sign In",
-                          //         style: TextStyle(
-                          //           fontWeight: FontWeight.bold,
-                          //         ),
-                          //       ),
-                          //     )
-                          //   ],
-                          // ),
                           Text.rich(
                             TextSpan(
                               text: "Don’t have an Account ? ",
@@ -745,25 +704,6 @@ class _login_ScreenState extends State<login_Screen> {
                               ),
                               IconButton(
                                 onPressed: () async {
-                                  // User? data = await FireBaseAuthHelper
-                                  //     .fireBaseAuthHelper
-                                  //     .signInWithAnonymous();
-                                  // if (data != null) {
-                                  //   Get.snackbar(
-                                  //     "Successfully",
-                                  //     "Successfully Login With Anonymously",
-                                  //     backgroundColor: Colors.green,
-                                  //     snackPosition: SnackPosition.BOTTOM,
-                                  //   );
-                                  //   Get.toNamed("/HomePage");
-                                  // } else {
-                                  //   Get.snackbar(
-                                  //     "Failed",
-                                  //     "Failed Login With Anonymously ",
-                                  //     backgroundColor: Colors.green,
-                                  //     snackPosition: SnackPosition.BOTTOM,
-                                  //   );
-                                  // }
                                   Map<String, dynamic> data =
                                       await FireBaseAuthHelper
                                           .fireBaseAuthHelper
@@ -823,7 +763,6 @@ class _login_ScreenState extends State<login_Screen> {
         setState(() {
           intialIndex = 1;
         });
-        // Get.toNamed("/signup_Verification");
       } else {
         Get.snackbar(
           'Failed',
@@ -865,14 +804,11 @@ class _login_ScreenState extends State<login_Screen> {
   }
 
   Future<UserCredential> signInWithFacebook() async {
-    // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
-    // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
-    // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 }

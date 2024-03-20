@@ -26,9 +26,6 @@ class _chat_ScreenState extends State<chat_Screen> {
   bool showEmoji = false;
   bool _isUploading = false;
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -107,12 +104,19 @@ class _chat_ScreenState extends State<chat_Screen> {
             ),
             toolbarHeight: 70,
             actions: [
-              IconButton(onPressed: () {
-
-              }, icon: Icon(Icons.video_call_outlined,size: 35,),),
-              IconButton(onPressed: () {
-
-              }, icon: Icon(Icons.call,),),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.video_call_outlined,
+                  size: 35,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.call,
+                ),
+              ),
             ],
           ),
           body: Column(
@@ -188,7 +192,6 @@ class _chat_ScreenState extends State<chat_Screen> {
           vertical: Get.height * .01, horizontal: Get.width * .025),
       child: Row(
         children: [
-          //input field & buttons
           Expanded(
             child: Card(
               shape: RoundedRectangleBorder(

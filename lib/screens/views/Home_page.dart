@@ -23,12 +23,12 @@ class _HomePageState extends State<HomePage> {
     FireStoreHelper.fireStoreHelper.getSelfInfo();
     SystemChannels.lifecycle.setMessageHandler((message) {
       print("Message :${message}");
-      if(message.toString().contains('resume')) FireStoreHelper.updateActiveStatus(true);
-      if(message.toString().contains('pause')) FireStoreHelper.updateActiveStatus(false);
+      if (message.toString().contains('resume'))
+        FireStoreHelper.updateActiveStatus(true);
+      if (message.toString().contains('pause'))
+        FireStoreHelper.updateActiveStatus(false);
       return Future.value(message);
     });
-
-
   }
 
   final TextEditingController _emailController = TextEditingController();
@@ -41,22 +41,20 @@ class _HomePageState extends State<HomePage> {
   final List<ChatUser> _searchList = [];
 
   bool _isSearching = false;
-
-
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () {
-          if(_isSearching){
+          if (_isSearching) {
             setState(() {
               _isSearching = false;
             });
-          return Future.value(false);
-          }else{
-            return Future.value(true);          }
+            return Future.value(false);
+          } else {
+            return Future.value(true);
+          }
         },
         child: Scaffold(
           appBar: AppBar(
@@ -74,8 +72,12 @@ class _HomePageState extends State<HomePage> {
                     onChanged: (value) {
                       _searchList.clear();
                       for (var i in list) {
-                        if (i.name.toLowerCase().contains(value.toLowerCase()) ||
-                            i.email.toLowerCase().contains(value.toLowerCase())) {
+                        if (i.name
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            i.email
+                                .toLowerCase()
+                                .contains(value.toLowerCase())) {
                           _searchList.add(i);
                         }
                         setState(() {
@@ -93,7 +95,9 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 icon: Icon(
-                  _isSearching ? CupertinoIcons.clear_circled_solid : Icons.search,
+                  _isSearching
+                      ? CupertinoIcons.clear_circled_solid
+                      : Icons.search,
                 ),
               ),
               IconButton(
@@ -115,23 +119,19 @@ class _HomePageState extends State<HomePage> {
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
-                // TODO: Handle this case.
                 case ConnectionState.waiting:
-                  // TODO: Handle this case.
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 case ConnectionState.active:
-                // TODO: Handle this case.
                 case ConnectionState.done:
-                  // TODO: Handle this case.
-
                   final data = snapshot.data?.docs;
                   list = data!.map((e) => ChatUser.fromJson(e.data())).toList();
 
                   if (list.isNotEmpty) {
                     return ListView.builder(
-                      itemCount: _isSearching ? _searchList.length : list.length,
+                      itemCount:
+                          _isSearching ? _searchList.length : list.length,
                       padding: EdgeInsets.only(
                         top: Get.height * 0.01,
                       ),
@@ -149,43 +149,6 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
-          // body: SingleChildScrollView(
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(16.0),
-          //     child: Form(
-          //       key: _formKey,
-          //       child: Column(
-          //         children: [
-          //           TextFormField(
-          //             controller: _emailController,
-          //             decoration: const InputDecoration(labelText: 'Email'),
-          //             validator: (value) =>
-          //                 (value!.isEmpty) ? "Enter a Email" : null,
-          //             onSaved: (value) {
-          //               email = value;
-          //             },
-          //           ),
-          //           TextFormField(
-          //             controller: _passwordController,
-          //             obscureText: true,
-          //             decoration: const InputDecoration(labelText: 'Password'),
-          //             validator: (value) =>
-          //                 (value!.isEmpty) ? "Enter a Password" : null,
-          //             onSaved: (value) {
-          //               password = value;
-          //             },
-          //           ),
-          //           ElevatedButton(
-          //             onPressed: () {
-          //               linkAccount();
-          //             },
-          //             child: const Text('Link Account'),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ),
       ),
     );

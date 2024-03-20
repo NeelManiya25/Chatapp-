@@ -10,23 +10,20 @@ class spalsh_screen extends StatefulWidget {
 }
 
 class _spalsh_screenState extends State<spalsh_screen> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed( Duration(seconds: 5),() {
-      Get.offNamed("/HomePage");
-    },);
+    Future.delayed(
+      Duration(seconds: 5),
+      () {
+        Get.offNamed("/HomePage");
+      },
+    );
   }
-
 
   @override
   Widget build(BuildContext context) {
-    // Timer(Duration(seconds: 5), () {
-    //   Navigator.pushReplacementNamed(context, '/');
-    // });
-
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -34,9 +31,8 @@ class _spalsh_screenState extends State<spalsh_screen> {
           width: double.infinity,
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/spalash-icon.png"),
-              )
-          ),
+            image: AssetImage("assets/images/spalash-icon.png"),
+          )),
         ),
         backgroundColor: Colors.white,
       ),
