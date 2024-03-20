@@ -49,31 +49,6 @@ class _login_ScreenState extends State<login_Screen> {
     _passwordVisible = true;
   }
 
-  // _handleGoogleBtnClick() {
-  //   //for showing progress bar
-  //   Dialogs.showProgressBar(context);
-  //
-  //   _signInWithGoogle().then((user) async {
-  //     //for hiding progress bar
-  //     Navigator.pop(context);
-  //
-  //     if (user != null) {
-  //       log('\nUser: ${user.user}');
-  //       log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
-  //
-  //       if ((await APIs.userExists())) {
-  //         Navigator.pushReplacement(
-  //             context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-  //       } else {
-  //         await APIs.createUser().then((value) {
-  //           Navigator.pushReplacement(
-  //               context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-  //         });
-  //       }
-  //     }
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -193,7 +168,7 @@ class _login_ScreenState extends State<login_Screen> {
                           height: Get.height * 0.05,
                         ),
                         const Text(
-                          'Made with ♥ by Vivek Baraiya',
+                          'Made with ♥ by Neel Maniya',
                         ),
                       ],
                     ),
@@ -711,7 +686,7 @@ class _login_ScreenState extends State<login_Screen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               GestureDetector(
-                                onTap :(){
+                                onTap: () {
                                   signInWithFacebook();
                                 },
                                 child: SvgPicture.asset(
@@ -726,17 +701,23 @@ class _login_ScreenState extends State<login_Screen> {
                               GestureDetector(
                                 onTap: () async {
                                   dialogsBox.showProgressBar();
-                                  Map<String,dynamic> data =
-                                  await FireBaseAuthHelper
-                                      .fireBaseAuthHelper.signInWithGoogle();
+                                  Map<String, dynamic> data =
+                                      await FireBaseAuthHelper
+                                          .fireBaseAuthHelper
+                                          .signInWithGoogle();
                                   Get.back();
                                   if (data['user'] != null) {
                                     print('\nUser: ${data['user']}');
-                                    if (await FireStoreHelper.fireStoreHelper.userExit()) {
-                                      Get.offAllNamed("/HomePage",arguments: data['user']);
+                                    if (await FireStoreHelper.fireStoreHelper
+                                        .userExit()) {
+                                      Get.offAllNamed("/HomePage",
+                                          arguments: data['user']);
                                     } else {
-                                      await FireStoreHelper.fireStoreHelper.createUser().then((value) {
-                                        Get.offAllNamed("/HomePage",arguments: data['user']);
+                                      await FireStoreHelper.fireStoreHelper
+                                          .createUser()
+                                          .then((value) {
+                                        Get.offAllNamed("/HomePage",
+                                            arguments: data['user']);
                                       });
                                     }
                                     Get.snackbar(
@@ -783,12 +764,12 @@ class _login_ScreenState extends State<login_Screen> {
                                   //     snackPosition: SnackPosition.BOTTOM,
                                   //   );
                                   // }
-                                  Map<String,dynamic> data = await FireBaseAuthHelper
-                                      .fireBaseAuthHelper
-                                      .signInWithAnonymous();
+                                  Map<String, dynamic> data =
+                                      await FireBaseAuthHelper
+                                          .fireBaseAuthHelper
+                                          .signInWithAnonymous();
 
                                   if (data['user'] != null) {
-
                                     Get.snackbar(
                                       "Successfully",
                                       "Successfully Login With Anonymously",
@@ -796,7 +777,7 @@ class _login_ScreenState extends State<login_Screen> {
                                       snackPosition: SnackPosition.BOTTOM,
                                     );
                                     Get.toNamed("/HomePage");
-                                  }else{
+                                  } else {
                                     Get.snackbar(
                                       "Failed",
                                       "${data['msg']}",
@@ -824,72 +805,72 @@ class _login_ScreenState extends State<login_Screen> {
     );
   }
 
-Future<void> signupWithEmailPassword() async {
-  if (signupKey.currentState != null && signupKey.currentState!.validate()) {
-    signupKey.currentState!.save();
+  Future<void> signupWithEmailPassword() async {
+    if (signupKey.currentState != null && signupKey.currentState!.validate()) {
+      signupKey.currentState!.save();
 
-    Map<String, dynamic> data = await FireBaseAuthHelper.fireBaseAuthHelper
-        .signupWithEmailPassword(email: Email!, password: Password!);
+      Map<String, dynamic> data = await FireBaseAuthHelper.fireBaseAuthHelper
+          .signupWithEmailPassword(email: Email!, password: Password!);
 
-    if (data['user'] != null) {
-      Get.snackbar(
-        'Successfully',
-        "Successfully Login",
-        backgroundColor: Colors.green,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2),
-      );
-      setState(() {
-        intialIndex = 1;
-      });
-      // Get.toNamed("/signup_Verification");
-    } else {
-      Get.snackbar(
-        'Failed',
-        data["msg"] ?? 'Unknown error occurred',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2),
-      );
+      if (data['user'] != null) {
+        Get.snackbar(
+          'Successfully',
+          "Successfully Login",
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+        );
+        setState(() {
+          intialIndex = 1;
+        });
+        // Get.toNamed("/signup_Verification");
+      } else {
+        Get.snackbar(
+          'Failed',
+          data["msg"] ?? 'Unknown error occurred',
+          backgroundColor: Colors.red,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+        );
+      }
     }
   }
-}
 
+  Future<void> signInWithEmailPassword() async {
+    if (signupKey.currentState != null && signupKey.currentState!.validate()) {
+      signupKey.currentState!.save();
 
-Future<void> signInWithEmailPassword() async {
-  if (signupKey.currentState != null && signupKey.currentState!.validate()) {
-    signupKey.currentState!.save();
+      Map<String, dynamic> data = await FireBaseAuthHelper.fireBaseAuthHelper
+          .signinWithEmailPassword(email: Email!, password: Password!);
 
-    Map<String, dynamic> data = await FireBaseAuthHelper.fireBaseAuthHelper
-        .signinWithEmailPassword(email: Email!, password: Password!);
-
-    if (data['user'] != null) {
-      Get.snackbar(
-        'Successfully',
-        "Successfully Login",
-        backgroundColor: Colors.green,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2),
-      );
-      Get.toNamed("/HomePage");
-    } else {
-      Get.snackbar(
-        'Failed',
-        data["msg"] ?? 'Unknown error occurred',
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2),
-      );
+      if (data['user'] != null) {
+        Get.snackbar(
+          'Successfully',
+          "Successfully Login",
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+        );
+        Get.toNamed("/HomePage");
+      } else {
+        Get.snackbar(
+          'Failed',
+          data["msg"] ?? 'Unknown error occurred',
+          backgroundColor: Colors.red,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+        );
+      }
     }
   }
-}
 
   Future<UserCredential> signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
     // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
